@@ -39,9 +39,7 @@ def predict():
 	
 	with graph.as_default():
 		out = model.predict(x)
-		print('##############################23223###', out)
 		response = np.argmax(out)
-		print('#############', response)
 		return str(response)
 
 if __name__ == '__main__':

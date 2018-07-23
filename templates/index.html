@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="{{ url_for('static',filename='favicon.ico') }}" type="image/x-icon">
+  <title>CNN Digit Recognition</title>
+  <link rel="stylesheet" href="{{ url_for('static',filename='styles15.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+ 	<div>
+		<h1>
+			<span>Handwritten Digit Recognition Using Convolutional Neural Networks</span>
+			<br>
+			(Model Accuracy on Kaggle MNIST Test Dataset - 0.99371)
+		</h1>
+	</div>
+	<br>
+	<br>
+	<div style="float: left;">
+		<h2>Draw a digit!</h2>
+		<br>
+        <canvas id="canvas" width="280" height="280" style="margin-left: 25px; border:8px solid; border-radius: 5px; cursor: crosshair;"></canvas>
+        <br>
+		<div style="margin-left: 100px;">
+			<a href="#" class="myButton">
+				<span style=" font-weight: 400; font-family: 'Open Sans', Helvetica;	"> Predict </span>
+			</a>	
+			<input type="button" class="myButton2" id="clearButton" value="Clear" style="">	
+		</div>
+		<br>
+		<h2 id="result"></h2>
+	</div>
+
+	<div>
+		<h2 style="margin-top: 80px !important; margin-left: 100px !important;"><span>Hello, this is redb17. I have used CNN model to train parameters on about 36,000 training examples from Kaggle MNIST Dataset. I have used convolutional layers alongwith max-pooling layers. I also trained a logistic regression model (after dimensionality reduction) but the best accuracy it produced was 0.97700. Both the models can be found on my <a style="display: inline;" href="https://github.com/redb17">github repo</a>.
+		</span></h2>
+	</div>
+
+		
+  		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+	    <script src="{{ url_for('static',filename='javascript3.js') }}"></script>
+	    <script type="text/javascript">
+	   
+	   		$(".myButton").click(function(){
+	   			var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	   			var canvasObj = document.getElementById("canvas");
+	   			var img = canvasObj.toDataURL();
+	   			$.ajax({
+	   				type: "POST",
+	   				url: $SCRIPT_ROOT + "/predict/",
+	   				data: img,
+	   				success: function(data){
+	   					$('#result').text(' Prediction: '+data);
+	   				}
+	   			});
+	   		});
+	   
+	   </script>
+</body>
+</html>
